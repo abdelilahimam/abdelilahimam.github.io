@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Olympic Games</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Portfolio</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="python analysis.html" class="active">Python Analysis</a></li>
+						<li><a href="power bi dashboard.html" class="active">Power Bi Dashboard</a></li>
+						<li><a href="elements.html">Elements</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<p>This section will cover the code used to achieve all the visualisations and graphs, but first the documentation, which has info about each dataset used and the important DataFrames created afterwards to make those graphs</p>
+
+							<div style="text-align:center;">
+								<button><a href="Olympics.html">SEE CODE</a></button>
+							</div>
+							
+							<p>
+								<h2>Olympic Games – Dictionary</h2>
+									
+								
+								<br>
+						
+Welcome to my project, this is my attempt at a Data Analysis project, I chose this field specifically just because I love watching the Olympics with all its different, cool and weird sports. It really has a lot to offer in form of entertainment and also a LOT of data that we can manipulate to our gain and if possible learn from them and keep improving. <br>
+<br>
+I will touch on a few datasets here, that will allow me to get a broad idea on the visualizations I’m trying to reach. To be specific I will mention every column and what it gives, these datasets include:<br>
+<br>
+(Dataset) athletes_events.csv: this one has data on a massive number of athletes from 1896 to 2016, the columns that exist here are all related to each athlete’s info like: physique, country, medals. <br>
+- ID: Number that is specific to each athlete <br>
+- Name: Full name of the athlete, including their middle names and other additions<br>
+- Sex: Female or Male<br>
+- Age: Age at the time of competing in that year<br>
+- Height: One uniform height measurement  <br>
+- Weight: One uniform weight measurement  <br>
+- Team: Country represented by the Athlete<br>
+- NOC: Code of that Country<br>
+- Games: Combination of the Year and Season in which that athlete played <br>
+- Year: The year the athlete participated in <br>
+- Season: Winter or Summer games<br>
+- City: The city in which the games were held <br>
+- Sport: The general name of the sport that the athlete participated in <br>
+- Event: Distinct type of the sport <br>
+- Medal: Type of Medal the athlete won, Gold, Silver, Bronze or NaN <br>
+<br>
+I stripped a lot of data from this dataset as I didn’t need the rows that had anything to do with the Winter games, I only kept the Summer data, and by that I had to drop the “Games” and “Season” columns because they gave me no additional info about the athlete or the event<br>
+<br>
+I named the Summer equivalent of this dataset ‘athlete\_events\_s’, the suffix ‘\_s’ refers to summer games and subsequently the ‘\_t’ refers to the total of both winter and summer.<br>
+<br>
+Source : https://www.kaggle.com/marcogdepinto/let-s-discover-more-about-the-olympic-games/data<br>
+<br>
+(Dataset) olympics.csv: this dataset has data about countries that participated in the Olympics. It includes info like the medals won, first appearance, …<br>
+<br>
+All the info about the columns are provided in the link below, But same as before I have to get rid of data about the winter game so I’ll drop of a few rows and columns: "Medal", "W\_Medal", "Apps", "Medal.1", "Gold", "Silver", "Bronze", 'WO\_Apps', 'WO\_Medal', 'WO\_Gold', 'WO\_Silver', 'WO\_Bronze'<br>
+
+And just like the previous dataset I will be naming adding the ‘\_s’ suffix to the summer related data.<br>
+
+Source : <https://data.world/johayes13/summer-winter-olympic-games/workspace/data-dictionary><br>
+<br>
+`	`The next three datasets have info about the 2021 Tokyo Olympics<br>
+<br>
+(Dataset) tokyo\_athletes : <br>
+- Name: Name of the Athlete <br>
+- NOC:  Nationality of that athlete<br>
+- Discipline: The event in which the athlete participated in<br>
+<br>
+(Dataset) tokyo\_genders :<br>
+- Discipline: The events that help place <br>
+- Female: Number of female athletes<br>
+- Male: Number of male athletes<br>
+- Total: Total of athletes that participated in the event<br>
+<br>
+(Dataset) tokyo\_medals : <br>
+- Rank: Rank of the country by number of gold medals won<br>
+- Team/NOC: Name of the country<br>
+- Gold: Number of Gold won by each country <br>
+- Silver: Number of Silver won by each country <br>
+- Bronze: Number of Bronze won by each country <br>
+- Total: Total number of medals won by each country<br>
+- Rank by Total: Rank of the country by total number of medals won<br>
+<br>
+(Dataset) noc: This DataFrame will help me later in reorganizing and building new dataframes based on the country codes <br>
+- Team/NOC: Country name <br>
+- Code: Country Code<br>
+<br>
+<br>
+<pre> ⚠ There will be some minor dataframes that I will not mention as they’re there as a bridge to help me reach another point of the build but won’t play a role in later visualizations ⚠ </pre>
+<br>
+The plus bullets below is used only to showcase the dataframes I’ll use to build visualizations<br>
+<br>
++ First DataFrame: it’s called ‘updated’ and it sums up both info about the medals won in the ‘olympics\_s’ and ‘tokyo\_medals’, so we’re kinda updating the first df, the updated df will have the same columns as the first one but with more count of medals if the country has won any<br>
+<br>
++ Second DataFrame: ‘arab\_olympics’ which is the same as before just filtered out the Arab countries<br>
+
++ Third DataFrame: ‘noc\_genders’ is a table that has info about the gender of athletes that participated in the Olympics for each country, its columns are:<br>
+
+- Country: Name of the Country<br>
+- Code: Code of that country<br>
+- Male: Sum of male athletes who represented that country<br>
+- Female: Sum of female athletes who represented that country<br>
+- Total: Sum of all athletes<br>
+<br>
++ Fourth & Fifth DataFrames: we have here two DFs ‘evnt\_genders’ and ‘all\_genders’, they both represent the same data and it’s the count of female and male athletes per Discipline, but the first has info just about the ‘athlete\_events\_s’ DF and the second merges data from ‘athlete\_events\_s’ and ‘tokyo\_medals’ so it kinda updates the count to 2021, their columns are: <br>
+
+- Discipline: The Sport which those athletes played <br>
+- Male: Sum of male athletes who played it<br>
+- Female: Sum of female athletes who played it<br>
+- Total: Sum of all athletes <br>
+<br>
++ Sixth & Seventh DataFrames: ‘succ\_athletes’ which includes just the athletes that were successful in the Olympics by winning any kind of Medal, and it has the same columns as before, and then comes ‘succ\_ath’ that has info about each athlete and the number of medals won, its columns are:<br>
+
+- Name: Name of the athlete<br>
+- NOC: Code of the country the athlete represents<br>
+- Apps: Number of times the athlete participated in the Olympics<br>
+- Gold: Sum of gold medals won <br>
+- Silver: Sum of silver medals won<br>
+- Bronze: Sum of bronze medals won<br>
+- Total: Sum of all Medals won <br>
+- Ratio(T/A): Ratio of total medals won per participations <br>
+- Sport: Specialty sport that the athlete won the medals in<br>
+<br>
++ Eight DataFrame: ‘age\_event’ this one takes a few popular sports and gives us a sneak peak of the age difference between them all and through the years, this is done by calculating the mean age of the athletes by each sport. A few info about some sports were missing so I replaced them with the average. Its columns are:<br>
+  - Year: Period in which the average was calculated<br>
+  - Gymnastics <br>
+  - Swimming<br>
+  - Athletics<br>
+  - Football<br>
+  - Weightlifting<br>
+  - Basketball<br>
+  - Volleyball<br>
+  - Water Sport <br>
+  - Tennis<br>
+  - Rugby<br>
+  <br>
++ Ninth & Tenth DataFrames: ‘physique\_h’, ‘physique\_w’ both are snippets from the ‘succ\_ath’ but I kept the columns concerning the physique info of the athletes and then I dropped the rows that were missing Height or Weight info for each DF, the columns are the same except for the first I kept just Height and the second just Weight <br>
+
+							</p>
+							<div style="text-align:center;">
+								<button><a href="Olympics.html">SEE CODE</a></button>
+							</div>
+						</div>
+						
+					</section>
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
