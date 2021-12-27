@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Olympic Games</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Portfolio</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="small codes.html" class="active">Code</a></li>
+						<li><a href="elements.html">Elements</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<p>This the code i used to achieve the task at hand</p>
+
+							<h2> Datum </h2>
+							<p>
+								<pre>
+								int main()
+								{
+									/* Schritt 1: */
+									int kalendar[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+								
+								
+									char datum[100];
+									char tag[3];
+									char monat[3];
+									char jahr[5];
+									int zeit;
+									int tzeit = 0;
+									int leap;
+									int subStringCtr = 0;
+									int maxIndex;
+								
+									printf("Geben Sie ein gültiges Datum in diesem Formular \"tt.mm.jjjj\": ");
+									scanf("%s", &datum);
+								
+									// Ich habe die nachste Teil gemacht, weil ich die Tag, Monat und Jahr vom Datum entnemhen muss
+									// tag
+								
+									while(subStringCtr < 2){
+											tag[subStringCtr]= datum[1 + subStringCtr - 1];
+											subStringCtr++;
+									}
+									tag[subStringCtr] = '\0';
+									subStringCtr = 0;
+								
+									// monat
+									while(subStringCtr < 2){
+											monat[subStringCtr]= datum[4 + subStringCtr - 1];
+											subStringCtr++;
+									}
+									monat[subStringCtr] = '\0';
+									subStringCtr = 0;
+								
+									// jahr
+									while(subStringCtr < 4){
+											jahr[subStringCtr]= datum[7 + subStringCtr - 1];
+											subStringCtr++;
+									}
+									jahr[subStringCtr] = '\0';
+								
+								
+									printf("TAG %s\n", tag);
+									printf("MONAT %s\n", monat);
+									printf("JAHR %s\n", jahr);
+									printf("\n");
+								
+									// jetzt muss ich die Zeichen oder Chars zu Ganzzahlen umwandelen
+									int t = atoi(tag);
+									int m = atoi(monat);
+									int j = atoi(jahr);
+								
+									printf("tag %d\n", t);
+									printf("monat %d\n", m);
+									printf("jahr %d\n", j);
+									printf("\n");
+								
+									/* Schritt 2: */
+									leap = (j - 2000) % 4;
+									if(leap == 0){
+										kalendar[1] = 29;
+										printf("Leap Year Done\n");
+									}
+								
+									/* Schritt 3: */
+								
+									if ((t < kalendar[m-1]) && (m < 13) && (m > 0) && (j > 1)){
+											maxIndex = m - 2;
+											zeit = t;
+											for(int i = 0; i <= maxIndex; i++){
+												tzeit = zeit;
+												zeit = tzeit + kalendar[i];
+												//printf("i= %d, tzeit= %d,kal = %d, zeit= %d\n",i,tzeit,zeit,kalendar[i]);
+												}
+											printf("tzeit = %d, zeit = %d\n", tzeit, zeit);
+											printf("Es ist der %d. Tag des Jahres %d \n", zeit, j);
+									}
+									else {
+											printf("Das Datum ist nicht korrekt");
+										}
+								
+								
+								
+									printf("\n");
+									return 0;
+								}
+								</pre>
+							</p>
+					</section>
+			</div>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
